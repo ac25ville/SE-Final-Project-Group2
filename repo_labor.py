@@ -58,6 +58,6 @@ def get_labor(self, repo_id=None, repo_name, programming_language):
         programming_language;
         """)
     results = pd.read_sql(laborNewSQL, self.database, 
-            params={'repo_id' = repo_id, 'repo_name' = repo_name, 
-            'programming_language' = programming_language})
+            params={'repo_id': repo_id, 'programming_language': "Python"})
+    results = ["WE DID IT"]
     return results
