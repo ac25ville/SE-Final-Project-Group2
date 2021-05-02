@@ -14,6 +14,13 @@ def get_labor(self, repo_id=None, repo_name, programming_language):
     if not repo_name:
         repo_name = 'repo_labor'
     
+    laborNewSQlGetParams = s.sql.text("""
+
+            
+
+    """
+    )
+
     laborNewSQL = s.sql.text("""
         SELECT C.repo_id,
         C.repo_name,
