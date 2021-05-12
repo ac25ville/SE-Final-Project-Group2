@@ -9,17 +9,26 @@ import pandas as pd
 from augur.util import register_metric
 
 @register_metric()
-def get_labor(self, repo_id=None, repo_name, programming_language):
+def repo_labor(self, repo_group_id=1, repo_id=1, period='day', begin_date=None, end_date=None):
 
-    if not repo_name:
-        repo_name = 'repo_labor'
-    
-    laborNewSQlGetParams = s.sql.text("""
+    config = {
+    "connection_string": "sqlite:///:memory:",
+    "database": "augur_osshealth",
+    "host": "augur.osshealth.io",
+    "password": "covfefe2020",
+    "port": 5432,
+    "schema": "augur_data",
+    "user": "chaoss",
+    "user_type": "read_only"
+    }
 
-            
+    database_connection_string = 'postgres+psycopg2://{}:{}@{}:{}/{}'.format(config['user'], config['password'], config['host'], config['port'], config['database'])
 
-    """
-    )
+    dbschema='augur_data'
+    engine = s.create_engine(
+    database_connection_string,
+    connect_args={'options': '-csearch_path={}'.format(dbschema)})
+
 
     laborNewSQL = s.sql.text("""
         SELECT C.repo_id,
@@ -64,7 +73,7 @@ def get_labor(self, repo_id=None, repo_name, programming_language):
         repo_id,
         programming_language;
         """)
-    results = pd.read_sql(laborNewSQL, self.database, 
-            params={'repo_id': repo_id, 'programming_language': "Python"})
-    results = ["WE DID IT"]
+
+    results = pd.read_sql(laborNewSQL, engine, 
+            params={'repo_id': repo_id, 'repo_group_id': repo_group_id})
     return results
