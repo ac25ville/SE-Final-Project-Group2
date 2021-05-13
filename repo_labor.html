@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+        <title>Augur Repo Labor API Display</title>
+        <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+        <script>
+         $(document).ready(function(){
+                 var endpoint = "http://ec2-3-19-75-211.us-east-2.compute.amazonaws.com:5000/api/unstable/repo-groups/1/repo-labor" ;          $("button").click(function(){
+                    console.log(endpoint)
+                    $.ajax({url: endpoint, success: function(result){
+                        console.log(result);
+                        $("#main").html("call successful, results in console")
+                        for (x in result){
+                            console.log(result[x]);
+//                            $("#main").append(result[x]);
+                        }
+                    }, fail: function(){
+                        console.log("fail");
+                    }}); 
+                });              
+            });
+           
+        </script>
+    </head>
+    <body>
+        <button> Load Data </button>
+        <div id="main">
+            Hello
+        </div>
+    </body>
+</html>
